@@ -39,6 +39,7 @@ class Particle:
         self.eccentricity = (self.pop / LA.norm(position)) - 1
         self.set_semi_major_axis()
         self.set_period()
+        print(self)
 
     def __str__(self):
         """
@@ -50,7 +51,20 @@ class Particle:
             String representation of object.
 
         """
-        return f"position = {self.position}\nvelocity = {self.velocity}\nacceleration = {self.acceleration}"
+        return (
+            f"{self.orbit_mass} = orbit_mass\n"
+            f"{self.mass} = mass\n"
+            f"{self.position} = position\n"
+            f"{self.velocity} = velocity\n"
+            f"{self.schwarz_radius} = schwarz rad\n"
+            f"{self.get_acceleration()} = acceleration\n"
+            f"{self.get_angular_momentum()} = ang_mom\n"
+            f"{self.get_reduced_mass()} = reduced mass\n"
+            f"{self.get_pop()} = pop\n"
+            f"{self.eccentricity} = eccentricity\n"
+            f"{self.get_semi_major_axis()} = sma\n"
+            f"{self.get_period()} = period\n"
+        )
 
     def set_schwarz_radius(self, central_mass):
         """
@@ -62,7 +76,7 @@ class Particle:
             Mass of the object around which the particle is being attracted.
 
         """
-        self.r_s = 2 * c.NEWTON_G * central_mass / c.LIGHT_SPEED_2
+        self.schwarz_radius = 2 * c.NEWTON_G * central_mass / c.LIGHT_SPEED_2
 
 # ==========VELOCITY=============
     def get_position(self):
@@ -162,7 +176,7 @@ class Particle:
         distance = LA.norm(self.position)  # This implicitly defines the sun as the origin
         self.set_r_square_ang_mom_()
         relativistic_correction = (1 + 3 * self.r_square_ang_mom / distance**2)
-        self.acceleration = -0.5 * c.LIGHT_SPEED_2 * self.r_s * relativistic_correction * self.position / distance**3
+        self.acceleration = -0.5 * c.LIGHT_SPEED_2 * self.schwarz_radius * relativistic_correction * self.position / distance**3
 
 # ==========ANGULAR MOMENTUM=============
     def get_angular_momentum(self):

@@ -3,7 +3,7 @@
 import numpy as np
 from numpy import linalg as LA
 
-from constants import NEWTON_G
+from particle_class import Particle
 
 
 def time_step(particle, time_scale):
@@ -156,7 +156,7 @@ def multiple_orbits(particle, dt, number_of_orbits):
         Positions of the periapsides.
     periapsis_angle_list : [float, ...]
         List of periapsis angles.
-    grav_wave_freq_list : float
+    grav_wave_freq_list : [float, ...]
         List of the gravitational wave frequencies.
 
     """
@@ -199,16 +199,37 @@ def precession_rate(times, angles):
     return rate
 
 
-def main(orbit_mass, mass, initial_position, initial_velocity, number_of_orbits, modifier, time_scale):
-    particle = Particle()
+def main(orbit_mass, mass, initial_position, initial_velocity, number_of_orbits, time_scale):
+    """
+    Orbit a particle with given properties.
 
-    dt = time_step(central_mass, initial_position, initial_velocity, modifier, time_scale)
-    # Initialize arrays
-    position = np.array([initial_position])  # , first_position])
-    velocity = np.array([initial_velocity])  # , first_velocity])
-    # let it go
-    position, velocity, periapsides, periapsides_angle, eccentricity, grav_wave_freq_list = multiple_orbits(
-        central_mass, orbit_mass, position, velocity, dt, number_of_orbits, modifier
-    )
+    Parameters
+    ----------
+    orbit_mass : float
+        Mass of the body being orbited.
+    mass : float
+        Mass of the particle.
+    initial_position : [float, float]
+        Initial position of the particle.
+    initial_velocity : [float, float]
+        Initial velocity of the particle.
+    number_of_orbits : int
+        Number of orbits to do.
+    time_scale : int or float
+        Parameter with which to inversely scale the time step.
 
-    return position, periapsides, grav_wave_freq_list
+    Returns
+    -------
+    periapsides : [[float, float], ...]
+        Positions of the periapsides.
+    periapsis_angle_list : [float, ...]
+        List of periapsis angles.
+    grav_wave_freq_list : [float, ...]
+        List of the gravitational wave frequencies.
+
+    """
+    particle = Particle(orbit_mass, mass, initial_position, initial_velocity)
+    dt = time_step(particle, time_scale)
+    periapsides, periapsis_angle_list, grav_wave_freq_list = multiple_orbits(particle, dt, number_of_orbits)
+
+    return periapsides, periapsis_angle_list, grav_wave_freq_list
