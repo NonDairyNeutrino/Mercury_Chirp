@@ -175,9 +175,9 @@ def multiple_orbits(particle, dt, number_of_orbits):
         periapsis_angle_list[i] = periapsis_angle
         grav_wave_freq_list[i] = grav_wave_freq
 
-        if i % 100 == 0:
+        if i % 1000 == 0:
             print("orbit #" + str(i))
-            print("f_GW = " + str(np.around(grav_wave_freq * 10**6, 3)) + " micro-Hz")
+            # print("f_GW = " + str(np.around(grav_wave_freq * 10**6, 3)) + " micro-Hz")
 
     return periapsides, periapsis_angle_list, grav_wave_freq_list
 

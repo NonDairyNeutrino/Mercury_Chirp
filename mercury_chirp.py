@@ -12,7 +12,7 @@ central_mass     = SUN_MASS
 orbiting_mass    = MERCURY_MASS
 initial_position = np.array([MERCURY_PEREHELION_DISTANCE, 0.])  # start at perihelion
 initial_velocity = np.array([0., MERCURY_PEREHELION_SPEED])  # speed at perihelion
-earth_years      = 5 * 10**5
+earth_years      = 10**5
 number_of_orbits = int(np.ceil(earth_years * (YEAR / MERCURY_YEAR)))  # i.e. mercury_years
 
 start = time.time()
@@ -24,7 +24,7 @@ periapsides, periapsis_angle_list, grav_wave_freq_list = main(
 )
 
 end = time.time()
-print(np.around((end - start) / 3600))  # seconds -> hours
+print("Simulation runtime: " + str(np.around((end - start) / 3600, 2)) + " hours")  # seconds -> hours
 
 fp.grav_wave_freq_plot(grav_wave_freq_list)
 fp.trajectory_plot(periapsides)
