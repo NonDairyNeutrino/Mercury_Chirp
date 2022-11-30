@@ -129,7 +129,7 @@ def orbit(particle, dt):
     for time in np.arange(0, particle.get_period(), dt):
         step(particle, dt)
 
-        if np.norm(particle.get_position()) < np.norm(periapsis):
+        if LA.norm(particle.get_position()) < LA.norm(periapsis):
             periapsis = particle.get_position()
 
     periapsis_angle = np.rad2deg(vector_angle(periapsis)) * 3600  # convert from radians to arcseconds #angle of periapsis of this orbit
@@ -160,7 +160,7 @@ def multiple_orbits(particle, dt, number_of_orbits):
         List of the gravitational wave frequencies.
 
     """
-    periapsides = np.zeros(number_of_orbits)
+    periapsides = np.zeros((number_of_orbits, 2))
     periapsis_angle_list = np.zeros(number_of_orbits)
     grav_wave_freq_list = np.zeros(number_of_orbits)
 

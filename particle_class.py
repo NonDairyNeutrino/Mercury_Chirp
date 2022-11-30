@@ -36,10 +36,10 @@ class Particle:
         self.set_angular_momentum()
         self.set_reduced_mass()
         self.set_pop()
-        self.eccentricity = (self.pop / LA.norm(position)) - 1
+        self.eccentricity = (self.pop / LA.norm(position)) - 1  # ONLY WORKS IF YOU START AT THE PERIAPSIS
         self.set_semi_major_axis()
         self.set_period()
-        print(self)
+        # print(self)
 
     def __str__(self):
         """
@@ -201,7 +201,7 @@ class Particle:
 
         """
         # ASSUMING CENTRAL BODY IS FIXED
-        self.angular_momentum = self.orbit_mass * np.cross(self.position, self.velocity)
+        self.angular_momentum = self.mass * np.cross(self.position, self.velocity)
 
 # ==========REDUCED MASS=============
     def get_reduced_mass(self):
@@ -249,7 +249,7 @@ class Particle:
         None.
 
         """
-        self.pop = self.angular_momentum ** 2 / (c.NEWTON_G * self.orbit_mass * self.mass * self.reduced_mass)
+        self.pop = (self.angular_momentum ** 2) / (c.NEWTON_G * self.orbit_mass * self.mass * self.reduced_mass)
 
 # ==========SEMI MAJOR AXIS=============
     def get_semi_major_axis(self):
