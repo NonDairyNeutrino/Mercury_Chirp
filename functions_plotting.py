@@ -36,7 +36,7 @@ def trajectory_plot(positions):
     plt.grid(True)
     plt.title("Periapsides over " + str(len(positions)) + " Mercury orbits")
     plt.tight_layout()
-    plt.savefig(vis_dir + 'Periapsides_' + str(int(len(positions) * MERCURY_YEAR / YEAR)) + '.pdf')
+    # plt.savefig(vis_dir + 'Periapsides_' + str(int(len(positions) * MERCURY_YEAR / YEAR)) + '.pdf')
     plt.show()
 
 
@@ -59,12 +59,13 @@ def periapsis_angle_plot(periapsides_angles):
     times = np.arange(0, len(periapsides_angles))
     rate = precession_rate(times, periapsides_angles)
     plt.plot(times, periapsides_angles, times, rate * times + periapsides_angles[0])
+    plt.legend(["Data", "Linear Fit"])
     plt.xlabel("Time [Orbits]")
     plt.ylabel("Periapsis angle (arcseconds)")
     plt.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
     plt.title("Precession rate: " + str(round((rate * MERCURY_YEAR / YEAR) * 100, 0)) + " arcseconds/century")
     plt.tight_layout()
-    plt.savefig(vis_dir + 'Periapsis_angle_' + str(int(len(times) * MERCURY_YEAR / YEAR)) + '.pdf')
+    plt.savefig(vis_dir + 'Periapsis_angle_legended' + str(int(len(times) * MERCURY_YEAR / YEAR)) + '.pdf')
     plt.show()
 
 
