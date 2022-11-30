@@ -95,11 +95,14 @@ def vector_angle(vector):
         Angle.
 
     """
+    angle = np.arctan2(vector[1], vector[0])  # Use for continuity around 0 angle
+
+    # Use for continuity around pi
     # This gives the counterclockwise angle from the x-axis
-    if vector[1] >= 0:
-        angle = np.arctan2(vector[1], vector[0])
-    else:
-        angle = 2 * np.pi + np.arctan2(vector[1], vector[0])
+    # if vector[1] >= 0:
+    #     angle = np.arctan2(vector[1], vector[0])
+    # else:
+    #     angle = 2 * np.pi + np.arctan2(vector[1], vector[0])
     return angle
 
 
@@ -132,7 +135,8 @@ def orbit(particle, dt):
         if LA.norm(particle.get_position()) < LA.norm(periapsis):
             periapsis = particle.get_position()
 
-    periapsis_angle = np.rad2deg(vector_angle(periapsis)) * 3600  # convert from radians to arcseconds #angle of periapsis of this orbit
+    periapsis_angle = np.rad2deg(vector_angle(periapsis)) * 3600  # convert from radians to degrees to arcseconds #angle of periapsis of this orbit
+    # print(vector_angle(periapsis))
 
     return periapsis, periapsis_angle, grav_wave_freq
 
